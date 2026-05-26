@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #8027f5;
+  --color-primary: #7c3aed;
 }
 
 body {
@@ -9,10 +9,10 @@ body {
 }
 
 dialog {
-  background-color: rgb(229 231 235); 
+  margin: auto;
+  border: none;
 }
 
-
 dialog::backdrop {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
 }
