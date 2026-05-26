@@ -1,47 +1,55 @@
-const formularz = document.getElementById('birthday-form')
-const inputDataUrodzenia = document.getElementById('birthdate')
+import './style.css'
+import dayjs from 'dayjs'
 
-const dialog = document.getElementById('result-dialog')
-const tekstWyniku = document.getElementById('result-text')
-const zamknijDialog = document.getElementById('close-dialog')
+const form=document.querySelector('#birthday-form')
+const birthdayInput=document.querySelector('#birthday')
 
-formularz.addEventListener('submit', (e) => {
+const dialog=document.querySelector('#result-dialog')
+const resultText=document.querySelector('#result-text')
+const closeDialogBtn=document.querySelector('#close-dialog')
+
+form.addEventListener('submit', (e) => {
   e.preventDefault()
 
-  const dataUrodzenia = dayjs(inputDataUrodzenia.value)
-  const dzisiaj = dayjs()
+  if (!birthdayInput.value) return
 
-  const liczbaDni = dzisiaj.diff(dataUrodzenia, 'day')
+  const today=dayjs().startOf('day')
+  const birthday=dayjs(birthdayInput.value).startOf('day')
 
-  let wiadomosc = `Minęło ${liczbaDni} dni od dnia twojego urodzenia.`
+  const daysFromBirth=today.diff(birthday, 'day')
 
-  const czyDzisUrodziny =
-    dzisiaj.date() === dataUrodzenia.date() &&
-    dzisiaj.month() === dataUrodzenia.month()
+  const isBirthdayToday=
+    today.date()===birthday.date() &&
+    today.month()===birthday.month()
 
-  if (czyDzisUrodziny) {
-    wiadomosc += ' Wszystkiego najlepszego!'
+  let nextBirthday=birthday.year(today.year())
+
+  if (nextBirthday.isBefore(today)) {
+    nextBirthday = nextBirthday.add(1, 'year')
+  }
+
+  const daysToBirthday = nextBirthday.diff(today, 'day')
+  const weeksToBirthday = Math.floor(daysToBirthday / 7)
+
+  let message = 'Minęło ${daysFromBirth} dni od Twojej daty urodzenia.'
+
+  if (isBirthdayToday) {
+    message += 'Wszystkiego najlepszego!'
   } else {
-    let nastepneUrodziny = dataUrodzenia.year(dzisiaj.year())
+    message += 'Do kolejnych urodzin pozostało ${weeksToBirthday} tygodni.'
 
-    if (nastepneUrodziny.valueOf() < dzisiaj.valueOf()) {
-      nastepneUrodziny = nastepneUrodziny.add(1, 'year')
-    }
-
-    const dniDoUrodzin = nastepneUrodziny.diff(dzisiaj, 'day')
-    const tygodnieDoUrodzin = Math.floor(dniDoUrodzin / 7)
-
-    if (tygodnieDoUrodzin === 0) {
-      wiadomosc += ' Masz urodziny w tym tygodniu!'
-    } else {
-      wiadomosc += ` Do twoich urodzin pozostało ${tygodnieDoUrodzin} tygodni.`
+    if (weeksToBirthday === 0) {
+      message += ' Masz urodziny w tym tygodniu!'
     }
   }
 
-  tekstWyniku.textContent = wiadomosc
-  dialog.showModal()
+  resultText.textContent = message
+
+  if (!dialog.open) {
+    dialog.showModal()
+  }
 })
 
-zamknijDialog.addEventListener('click', () => {
+closeDialogBtn.addEventListener('click', () => {
   dialog.close()
 })

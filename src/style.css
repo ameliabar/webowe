@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #8027f5;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 dialog {
   background-color: rgb(229 231 235); 
 }
 
-@theme {
-  --color-primary: #8027F5;
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
 }

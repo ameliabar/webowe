@@ -1,30 +1,48 @@
 <!doctype html>
 <html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalkulator ile dni do urodzin</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="min-h-screen flex items-center justify-center">
-  <div class="flex flex-col items-center gap-6">
-    <h1 class="text-2xl font-bold text-primary">Kalkulator ile dni do urodzin</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator ile dni od urodzin</title>
+  </head>
 
-    <form id="birthday-form" class="flex flex-col items-center gap-4">
-      <label class="flex flex-col gap-1">
-        Data urodzenia
-        <input type="date" id="birthdate" required class="border rounded px-3 py-2" />
-      </label>
-      <button type="submit" class="bg-blue-300 p-4 rounded cursor-pointer">Oblicz</button>
-    </form>
-  </div>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+      <h1 class="text-2xl font-bold text-primary mb-6">
+        Kalkulator ile dni od urodzin
+      </h1>
 
-  <dialog id="result-dialog" class="rounded-lg p-6 w-80">
-    <button id="close-dialog" class="block ml-auto cursor-pointer">✕</button>
-    <p id="result-text" class="text-red-600 mt-2"></p>
-  </dialog>
+      <form id="birthday-form" class="flex flex-col gap-4">
+        <input
+          id="birthday"
+          type="date"
+          required
+          class="border border-gray-300 rounded-lg p-3"
+        />
 
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <script src="main.js"></script>
-</body>
+        <button
+          type="submit"
+          class="bg-blue-300 p-4 rounded-lg font-semibold hover:opacity-90 transition"
+        >
+          Sprawdź
+        </button>
+      </form>
+    </div>
+
+    <dialog
+      id="result-dialog"
+      class="bg-gray-200 text-red-600 p-6 rounded-xl relative"
+    >
+      <button
+        id="close-dialog"
+        class="absolute top-2 right-3 text-black text-xl font-bold"
+      >
+        x
+      </button>
+
+      <p id="result-text" class="text-lg"></p>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
