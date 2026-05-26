@@ -1,6 +1,3 @@
-import './style.css'
-import dayjs from 'dayjs'
-
 const formularz = document.getElementById('birthday-form')
 const inputDataUrodzenia = document.getElementById('birthdate')
 
@@ -32,7 +29,6 @@ formularz.addEventListener('submit', (e) => {
     }
 
     const dniDoUrodzin = nastepneUrodziny.diff(dzisiaj, 'day')
-
     const tygodnieDoUrodzin = Math.floor(dniDoUrodzin / 7)
 
     if (tygodnieDoUrodzin === 0) {
@@ -43,7 +39,6 @@ formularz.addEventListener('submit', (e) => {
   }
 
   tekstWyniku.textContent = wiadomosc
-
   dialog.showModal()
 })
 
