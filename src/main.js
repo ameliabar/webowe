@@ -14,7 +14,7 @@ formularz.addEventListener('submit', (e) => {
   const dataUrodzenia = dayjs(inputDataUrodzenia.value)
   const dzisiaj = dayjs()
 
-  const liczbaDni = dzisiaj.diff(dataUrodzenia, 'days')
+  const liczbaDni = dzisiaj.diff(dataUrodzenia, 'day')
 
   let wiadomosc = `Minęło ${liczbaDni} dni od dnia twojego urodzenia.`
 
