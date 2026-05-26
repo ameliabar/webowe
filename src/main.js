@@ -24,7 +24,7 @@ formularz.addEventListener('submit', (e) => {
   } else {
     let nastepneUrodziny = dataUrodzenia.year(dzisiaj.year())
 
-    if (nastepneUrodziny.isBefore(dzisiaj, 'day')) {
+    if (nastepneUrodziny.valueOf() < dzisiaj.valueOf()) {
       nastepneUrodziny = nastepneUrodziny.add(1, 'year')
     }
 
