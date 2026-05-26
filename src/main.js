@@ -1,53 +1,49 @@
 import './style.css'
 import dayjs from 'dayjs'
 
-const form = document.querySelector('#birthday-form')
-const birthdayInput = document.querySelector('#birthday')
+const form=document.querySelector('#birthday-form')
+const birthdayInput=document.querySelector('#birthday')
 
-const dialog = document.querySelector('#result-dialog')
-const resultText = document.querySelector('#result-text')
-const closeDialogBtn = document.querySelector('#close-dialog')
+const dialog=document.querySelector('#result-dialog')
+const resultText=document.querySelector('#result-text')
+const closeDialogBtn=document.querySelector('#close-dialog')
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
 
   if (!birthdayInput.value) return
 
-  const today = dayjs().startOf('day')
-  const birthday = dayjs(birthdayInput.value).startOf('day')
+  const today=dayjs().startOf('day')
+  const birthday=dayjs(birthdayInput.value).startOf('day')
 
-  // ile dni minęło od narodzin
-  const daysFromBirth = today.diff(birthday, 'day')
+  const daysFromBirth=today.diff(birthday, 'day')
 
-  // sprawdzanie urodzin
   const isBirthdayToday =
-    today.date() === birthday.date() &&
-    today.month() === birthday.month()
+    today.date()===birthday.date() &&
+    today.month()===birthday.month()
 
-  // następne urodziny
-  let nextBirthday = birthday.year(today.year())
+  let nextBirthday=birthday.year(today.year())
 
   if (nextBirthday.isBefore(today)) {
-    nextBirthday = nextBirthday.add(1, 'year')
+    nextBirthday=nextBirthday.add(1, 'year')
   }
 
-  // tygodnie do urodzin
-  const daysToBirthday = nextBirthday.diff(today, 'day')
-  const weeksToBirthday = Math.floor(daysToBirthday / 7)
+  const daysToBirthday=nextBirthday.diff(today, 'day')
+  const weeksToBirthday=Math.floor(daysToBirthday / 7)
 
-  let message = `Minęło ${daysFromBirth} dni od Twojej daty urodzenia.`
+  let message = ``
 
   if (isBirthdayToday) {
-    message += ` Wszystkiego najlepszego! WOOO`
+    message += `Wszystkiego najlepszego! WOOO`
   } else {
-    message += ` Do kolejnych urodzin pozostało ${weeksToBirthday} tygodni.`
+    message += `Minęło ${daysFromBirth} dni od Twojej daty urodzenia. Do kolejnych urodzin pozostało ${weeksToBirthday} tygodni.`
 
     if (weeksToBirthday === 0) {
-      message += ` Masz urodziny w tym tygodniu!`
+      message += `Masz urodziny w tym tygodniu!`
     }
   }
 
-  resultText.textContent = message
+  resultText.textContent=message
 
   if (!dialog.open) {
     dialog.showModal()
