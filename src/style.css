@@ -4,6 +4,6 @@ dialog {
   background-color: rgb(229 231 235); 
 }
 
-@theme {
+theme {
   --color-primary: #8027F5;
 }
