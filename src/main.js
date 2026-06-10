@@ -61,8 +61,8 @@ const render = async () => {
       "bg-white p-6 rounded-lg shadow border-l-4 border-pink-400";
 
     el.innerHTML = `
-      <h3 class="text-2xl font-bold text-pink-500" style="font-family: 'Playwrite GB J', cursive;">
-      ${a.title}
+      <h3 class="text-2xl font-bold text-pink-500">
+        ${a.title}
       </h3>
 
       <p class="text-gray-600 mb-2">
