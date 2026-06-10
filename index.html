@@ -3,45 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kalkulator ile dni od urodzin</title>
+    <title>Artykuły Supabase!</title>
   </head>
 
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-      <h1 class="text-2xl font-bold text-primary mb-6">
-        Kalkulator ile dni od urodzin
-      </h1>
+  <body class="bg-gray-100 text-gray-900">
 
-      <form id="birthday-form" class="flex flex-col gap-4">
-        <input
-          id="birthday"
-          type="date"
-          required
-          class="border border-gray-300 rounded-lg p-3"
-        />
+    <main class="max-w-4xl mx-auto p-6">
 
-        <button
-          type="submit"
-          class="bg-blue-300 p-4 rounded-lg font-semibold hover:opacity-90 transition"
-        >
-          Sprawdź
-        </button>
-      </form>
-    </div>
+      <section class="mb-8 text-center">
+        <h1 class="text-4xl font-bold text-pink-500">
+          Artykuły z Supabase
+        </h1>
+      </section>
 
-    <dialog
-      id="result-dialog"
-      class="bg-gray-200 text-red-600 p-6 rounded-xl relative"
-    >
-      <button
-        id="close-dialog"
-        class="absolute top-2 right-3 text-black text-xl font-bold"
-      >
-        x
-      </button>
+      <!-- DO sortowania -->
+      <section class="mb-8">
+        <select id="sortSelect"
+                class="w-full p-3 border rounded bg-white">
+          <option value="date_asc">Po dacie rosnąco</option>
+          <option value="date_desc">Po dacie malejąco</option>
+          <option value="title_asc">Po nazwie alfabetycznie</option>
+        </select>
+      </section>
 
-      <p id="result-text" class="text-lg"></p>
-    </dialog>
+      <!-- lista artykulow -->
+      <section class="mb-12">
+        <div id="articles" class="space-y-6"></div>
+      </section>
+
+      <!-- tu bedzie na formsa -->
+      <section>
+        <h2 class="text-2xl font-bold mb-4">
+          Dodaj artykuł
+        </h2>
+
+        <form id="articleForm"
+              class="bg-white p-6 rounded-lg shadow space-y-4">
+
+          <input id="title"
+                 placeholder="Tytuł"
+                 class="w-full border p-3 rounded"
+                 required />
+
+          <input id="subtitle"
+                 placeholder="Podtytuł"
+                 class="w-full border p-3 rounded"
+                 required />
+
+          <input id="author"
+                 placeholder="Autor"
+                 class="w-full border p-3 rounded"
+                 required />
+
+          <input id="created_at"
+                 type="date"
+                 class="w-full border p-3 rounded"
+                 required />
+
+          <textarea id="content"
+                    placeholder="Treść"
+                    class="w-full border p-3 rounded"
+                    rows="5"
+                    required></textarea>
+
+          <button class="bg-pink-500 text-white px-6 py-3 rounded hover:bg-pink-600">
+            Dodaj
+          </button>
+
+        </form>
+      </section>
+
+    </main>
 
     <script type="module" src="/src/main.js"></script>
   </body>

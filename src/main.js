@@ -1,55 +1,127 @@
-import './style.css'
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
-const form=document.querySelector('#birthday-form')
-const birthdayInput=document.querySelector('#birthday')
+const API_BASE =
+  "https://xtdctnkasfsvrgjnduhn.supabase.co/rest/v1/article";
 
-const dialog=document.querySelector('#result-dialog')
-const resultText=document.querySelector('#result-text')
-const closeDialogBtn=document.querySelector('#close-dialog')
+const API_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0ZGN0bmthc2ZzdnJnam5kdWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwODUxMTEsImV4cCI6MjA5NjY2MTExMX0.QsLP9NKLk85j3l7bWEafBI7gyCstzYdYC_xbj0LEMho";
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault()
+const SELECT_URL =
+  `${API_BASE}?select=*`;
 
-  if (!birthdayInput.value) return
 
-  const today=dayjs().startOf('day')
-  const birthday=dayjs(birthdayInput.value).startOf('day')
+let currentSort = "date_desc";
 
-  const daysFromBirth=today.diff(birthday, 'day')
 
-  const isBirthdayToday =
-    today.date()===birthday.date() &&
-    today.month()===birthday.month()
+//przechwytywanie tegp
 
-  let nextBirthday=birthday.year(today.year())
+const fetchArticles = async () => {
+  try {
+    let orderParam = "";
 
-  if (nextBirthday.isBefore(today)) {
-    nextBirthday=nextBirthday.add(1, 'year')
-  }
-
-  const daysToBirthday=nextBirthday.diff(today, 'day')
-  const weeksToBirthday=Math.floor(daysToBirthday / 7)
-
-  let message = ``
-
-  if (isBirthdayToday) {
-    message += `Wszystkiego najlepszego! WOOO`
-  } else {
-    message += `Minęło ${daysFromBirth} dni od Twojej daty urodzenia. Do kolejnych urodzin pozostało ${weeksToBirthday} tygodni.`
-
-    if (weeksToBirthday === 0) {
-      message += `Masz urodziny w tym tygodniu!`
+    if (currentSort === "date_asc") {
+      orderParam = "&order=created_at.asc";
     }
+
+    if (currentSort === "date_desc") {
+      orderParam = "&order=created_at.desc";
+    }
+
+    if (currentSort === "title_asc") {
+      orderParam = "&order=title.asc";
+    }
+
+    const res = await fetch(SELECT_URL + orderParam, {
+      headers: {
+        apiKey: API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    });
+
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return [];
   }
+};
 
-  resultText.textContent=message
 
-  if (!dialog.open) {
-    dialog.showModal()
-  }
-})
+const container = document.getElementById("articles");
 
-closeDialogBtn.addEventListener('click', () => {
-  dialog.close()
-})
+const render = async () => {
+  const data = await fetchArticles();
+
+  container.innerHTML = "";
+
+  data.forEach((a) => {
+    const el = document.createElement("article");
+
+    el.className =
+      "bg-white p-6 rounded-lg shadow border-l-4 border-pink-400";
+
+    el.innerHTML = `
+      <h3 class="text-2xl font-bold text-pink-500">
+        ${a.title}
+      </h3>
+
+      <p class="text-gray-600 mb-2">
+        ${a.subtitle}
+      </p>
+
+      <p class="text-sm text-gray-500 mb-2">
+        Autor: ${a.author}
+      </p>
+
+      <time class="block text-xs text-gray-400 mb-3">
+        ${dayjs(a.created_at).format("DD-MM-YYYY")}
+      </time>
+
+      <p>
+        ${a.content}
+      </p>
+    `;
+
+    container.appendChild(el);
+  });
+};
+
+
+document
+  .getElementById("sortSelect")
+  .addEventListener("change", (e) => {
+    currentSort = e.target.value;
+    render();
+  });
+
+
+//na dodanie art
+
+document
+  .getElementById("articleForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      title: document.getElementById("title").value,
+      subtitle: document.getElementById("subtitle").value,
+      author: document.getElementById("author").value,
+      content: document.getElementById("content").value,
+      created_at: document.getElementById("created_at").value,
+      is_published: true,
+    };
+
+    await fetch(API_BASE, {
+      method: "POST",
+      headers: {
+        apiKey: API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    e.target.reset();
+    render();
+  });
+
+render();
