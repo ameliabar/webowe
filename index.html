@@ -17,12 +17,19 @@
       </section>
 
       <!-- DO sortowania -->
-      <section class="mb-8">
-        <select id="sortSelect"
+      <section class="mb-8 flex gap-4">
+        <select id="filterSelect"
                 class="w-full p-3 border rounded bg-white">
-          <option value="date_asc">Po dacie rosnąco</option>
-          <option value="date_desc">Po dacie malejąco</option>
-          <option value="title_asc">Po nazwie alfabetycznie</option>
+          <option value="none">Domyślna kolejność</option>
+          <option value="date">Po dacie</option>
+          <option value="title">Po nazwie alfabetycznie</option>
+        </select>
+
+        <select id="dirSelect"
+                class="w-full p-3 border rounded bg-white"
+                disabled>
+          <option value="asc">Rosnąco</option>
+          <option value="desc">Malejąco</option>
         </select>
       </section>
 

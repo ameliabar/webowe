@@ -7,29 +7,20 @@ const API_BASE =
 const API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0ZGN0bmthc2ZzdnJnam5kdWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwODUxMTEsImV4cCI6MjA5NjY2MTExMX0.QsLP9NKLk85j3l7bWEafBI7gyCstzYdYC_xbj0LEMho";
 
-const SELECT_URL =
-  `${API_BASE}?select=*`;
+const SELECT_URL = `${API_BASE}?select=*`;
 
-
-let currentSort = "date_desc";
-
-
-//przechwytywanie tegp
+let currentSort = "none";
+let currentDir = "asc";
 
 const fetchArticles = async () => {
   try {
     let orderParam = "";
 
-    if (currentSort === "date_asc") {
-      orderParam = "&order=created_at.asc";
+    if (currentSort === "date") {
+      orderParam = `&order=created_at.${currentDir}`;
     }
-
-    if (currentSort === "date_desc") {
-      orderParam = "&order=created_at.desc";
-    }
-
-    if (currentSort === "title_asc") {
-      orderParam = "&order=title.asc";
+    if (currentSort === "title") {
+      orderParam = `&order=title.${currentDir}`;
     }
 
     const res = await fetch(SELECT_URL + orderParam, {
@@ -45,7 +36,6 @@ const fetchArticles = async () => {
     return [];
   }
 };
-
 
 const container = document.getElementById("articles");
 
@@ -86,14 +76,21 @@ const render = async () => {
   });
 };
 
+document.getElementById("filterSelect").addEventListener("change", (e) => {
+  currentSort = e.target.value;
+  const dirSelect = document.getElementById("dirSelect");
+  if (currentSort === "none") {
+    dirSelect.disabled = true;
+  } else {
+    dirSelect.disabled = false;
+  }
+  render();
+});
 
-document
-  .getElementById("sortSelect")
-  .addEventListener("change", (e) => {
-    currentSort = e.target.value;
-    render();
-  });
-
+document.getElementById("dirSelect").addEventListener("change", (e) => {
+  currentDir = e.target.value;
+  render();
+});
 
 //na dodanie art
 
