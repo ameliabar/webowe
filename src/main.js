@@ -2,7 +2,7 @@ import "./style.css";
 import dayjs from "dayjs";
 
 const API_BASE =
-  "https://xtdctnkasfsvrgjnduhn.supabase.co/rest/v1/article";
+  "https://xtdctnkassvrgjnduhn.supabase.co/rest/v1/article";
 
 const API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0ZGN0bmthc2ZzdnJnam5kdWhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwODUxMTEsImV4cCI6MjA5NjY2MTExMX0.QsLP9NKLk85j3l7bWEafBI7gyCstzYdYC_xbj0LEMho";
