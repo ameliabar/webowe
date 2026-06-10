@@ -1,3 +1,4 @@
+import "./style.css";
 import dayjs from "dayjs";
 
 const API_BASE =
