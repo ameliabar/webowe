@@ -10,17 +10,19 @@ const API_KEY =
 const SELECT_URL = `${API_BASE}?select=*`;
 
 let currentSort = "none";
-let currentDir = "asc";
 
 const fetchArticles = async () => {
   try {
     let orderParam = "";
 
-    if (currentSort === "date") {
-      orderParam = `&order=created_at.${currentDir}`;
+    if (currentSort === "date_asc") {
+      orderParam = "&order=created_at.asc";
+    }
+    if (currentSort === "date_desc") {
+      orderParam = "&order=created_at.desc";
     }
     if (currentSort === "title") {
-      orderParam = `&order=title.${currentDir}`;
+      orderParam = "&order=title.asc";
     }
 
     const res = await fetch(SELECT_URL + orderParam, {
@@ -78,17 +80,6 @@ const render = async () => {
 
 document.getElementById("filterSelect").addEventListener("change", (e) => {
   currentSort = e.target.value;
-  const dirSelect = document.getElementById("dirSelect");
-  if (currentSort === "none") {
-    dirSelect.disabled = true;
-  } else {
-    dirSelect.disabled = false;
-  }
-  render();
-});
-
-document.getElementById("dirSelect").addEventListener("change", (e) => {
-  currentDir = e.target.value;
   render();
 });
 
